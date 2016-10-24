@@ -30,7 +30,7 @@ public class User {
 	@Column(name = "ID")
 	private long id;
 	
-	@Pattern(regexp = "\\w{3}")
+	@Pattern(regexp = "\\w{3,}")
 	@Column(unique = true)
 	private String login;
 	

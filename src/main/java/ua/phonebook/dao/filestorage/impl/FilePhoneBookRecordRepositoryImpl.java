@@ -182,7 +182,7 @@ public class FilePhoneBookRecordRepositoryImpl implements FilePhoneBookRecordRep
 	}
 	
 	/**
-	 * Replaces contents of File, located in {@link #filePhoneBookLocation},
+	 * Replaces contents of File, located on {@link #filePhoneBookLocation},
 	 * with converted to json list of {@code PhoneBookRecord}s.
 	 * @param resultList list with PhoneBookRecords
 	 */

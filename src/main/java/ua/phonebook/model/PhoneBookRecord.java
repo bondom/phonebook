@@ -10,13 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="PHONE_BOOK")
@@ -42,7 +40,7 @@ public class PhoneBookRecord {
 	
 	@NotBlank
 	@Column(nullable = false)
-	@Pattern(regexp = "^[+]380[50|63|66|67|68|70|90|73|91|92|93|94|95|96|97|98|99]\\d{7}$")
+	@Pattern(regexp = "^[+]380(50|63|66|67|68|70|90|73|91|92|93|94|95|96|97|98|99)\\d{7}$")
 	private String mobilePhone;
 	
 	@Column
