@@ -38,12 +38,12 @@ public class PhoneBookRecord {
 	@Column(nullable = false)
 	private String patronymic;
 	
-	@NotBlank
 	@Column(nullable = false)
-	@Pattern(regexp = "^[+]380(50|63|66|67|68|70|90|73|91|92|93|94|95|96|97|98|99)\\d{7}$")
+	@Pattern(regexp = "^[+]380[(](50|63|6[6-8]|70|73|9\\d)[)]\\d{7}$")
 	private String mobilePhone;
 	
 	@Column
+	@Pattern(regexp = "^(\\(\\d{2,3}\\))?\\d+(\\-\\d+)*$")
 	private String homePhone;
 	
 	@Column

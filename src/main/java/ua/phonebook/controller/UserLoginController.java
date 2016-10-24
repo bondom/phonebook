@@ -56,6 +56,9 @@ public class UserLoginController {
 			return "redirect:/login";
 		} catch (DuplicateLoginException e) {
 			attr.addFlashAttribute("error","This login is already busy.");
+			attr.addFlashAttribute
+					("org.springframework.validation.BindingResult.user",result);
+			attr.addFlashAttribute("user", user);
 			return "redirect:/login";
 		}
 	}

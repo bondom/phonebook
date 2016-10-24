@@ -62,7 +62,7 @@
 	
 								<@spring.bind "record.lastName"/>
 								<input type = "text" name = "${spring.status.expression}" 
-								class="form-control" placeholder = "Last Name"/>
+								value = "${spring.status.value!""}" class="form-control" placeholder = "Last Name"/>
 								<br>
 								<#list spring.status.errorMessages as error>
 									<div class="alert alert-warning">${error}</div>
