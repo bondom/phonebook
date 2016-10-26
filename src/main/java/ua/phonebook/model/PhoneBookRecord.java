@@ -14,7 +14,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="PHONE_BOOK")
@@ -43,7 +42,7 @@ public class PhoneBookRecord {
 	private String mobilePhone;
 	
 	@Column
-	@Pattern(regexp = "^(\\(\\d{2,3}\\))?\\d+(\\-\\d+)*$")
+	@Pattern(regexp = "^([+]380[(](\\d{2,4})[)]\\d{7}$)|")
 	private String homePhone;
 	
 	@Column

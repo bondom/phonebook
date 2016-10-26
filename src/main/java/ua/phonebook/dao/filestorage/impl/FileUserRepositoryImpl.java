@@ -40,24 +40,26 @@ public class FileUserRepositoryImpl implements FileUserRepository {
 	@PostConstruct
 	public void createFileIfNotExistent() {
 		File file = new File(fileLocation);
-		long numberOfUsers = 0;
-		if(file.length()>0){
-			numberOfUsers = getAllUsersInJson().length;
-		}
-		
-		lastSavedId = new AtomicLong(numberOfUsers);
-		
 		try{
 			file.createNewFile();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		long numberOfUsers = 0;
+		if(file.length()>0){
+			numberOfUsers = getAllUsersInJson().length;
+		}
+		
+		lastSavedId = new AtomicLong(numberOfUsers);
 	}
 
 	@Override
 	public User getUserByLogin(String login) {
 		String[] jsonUsers = getAllUsersInJson();
+		if(jsonUsers==null || jsonUsers.length==0){
+			return null;
+		}
     	Type type = new TypeToken<User>() {}.getType();
     	for(int i = 0;i<jsonUsers.length;i++){
     		User user = gson.fromJson(jsonUsers[i], type);

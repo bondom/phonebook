@@ -2,30 +2,23 @@
 <#import "/spring.ftl" as spring>
 <html>
 <head>
-	<link rel="stylesheet" type = "text/css" href="<@spring.url "/resources/css/bootstrap.min.css"/>"/>         
-	<script src="<@spring.url "/resources/js/bootstrap.min.js"/>"></script> 
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<#include "/general.ftl">
+	<title><@spring.message "title.edit"/></title>
 </head>
 <body>
 	<div class="container">
 		<div class="panel panel-default">
+			<#include "/fragments/top.ftl">
+			<#include "/fragments/header.ftl">
 			<div class="panel-body" style = "margin: 0px">
-				<a href = "javascript:formSubmit()" class="btn btn-info" role="button">Log out</a>
-
-				<form action = "<@spring.url "/logout"/>" method = "post" id = "logoutForm">
-					<input type = "hidden" 
-							name = "${_csrf.parameterName}"
-							value = "${_csrf.token}"/>
-				</form>
-				<br><br>
-
-				<h3>Update record:</h3>
+				<h3><@spring.message "form.edit.name"/>:</h3>
 				<form action = "<@spring.url "/phonebook/updateRecord"/>" method = "Post" role = "form">
 						<div class="form-group col-xs-5" >
 	
 								<@spring.bind "record.firstName"/>
 								<input type = "text" name = "${spring.status.expression}" 
-								value = "${spring.status.value!""}" class="form-control" placeholder = "First Name"/>
+								value = "${spring.status.value!""}" class="form-control" 
+								placeholder = "<@spring.message "phonebookrecord.placeholder.firstName"/>"/>
 								</br>
 								<#list spring.status.errorMessages as error>
 									<div class="alert alert-warning">${error}</div>
@@ -33,8 +26,8 @@
 	
 								<@spring.bind "record.lastName"/>
 								<input type = "text" name = "${spring.status.expression}" 
-								value = "${spring.status.value!""}"
-								class="form-control" placeholder = "Last Name"/>
+								value = "${spring.status.value!""}" class="form-control" 
+								placeholder = "<@spring.message "phonebookrecord.placeholder.lastName"/>"/>
 								<br>
 								<#list spring.status.errorMessages as error>
 									<div class="alert alert-warning">${error}</div>
@@ -42,7 +35,8 @@
 	
 								<@spring.bind "record.patronymic"/>
 								<input type = "text" name = "${spring.status.expression}" 
-								value = "${spring.status.value!""}" class="form-control" placeholder = "Patronymic"/>
+								value = "${spring.status.value!""}" class="form-control" 
+								placeholder = "<@spring.message "phonebookrecord.placeholder.patronymic"/>"/>
 								<br>
 								<#list spring.status.errorMessages as error>
 									<div class="alert alert-warning">${error}</div>
@@ -50,7 +44,8 @@
 								
 								<@spring.bind "record.mobilePhone"/>
 								<input type = "text" name = "${spring.status.expression}" 
-								value = "${spring.status.value!""}" class="form-control" placeholder = "Mobile Phone e.g: +380(XX)XXXXXXX"/>
+								value = "${spring.status.value!""}" class="form-control" 
+								placeholder = "<@spring.message "phonebookrecord.placeholder.mobilePhone"/>"/>
 								<br>
 								<#list spring.status.errorMessages as error>
 									<div class="alert alert-warning">${error}</div>
@@ -58,7 +53,8 @@
 								
 								<@spring.bind "record.homePhone"/>
 								<input type = "text" name = "${spring.status.expression}" 
-								value = "${spring.status.value!""}" class="form-control" placeholder = "Home phone"/>
+								value = "${spring.status.value!""}" class="form-control" 
+								placeholder = "<@spring.message "phonebookrecord.placeholder.homePhone"/>"/>
 								<br>
 								<#list spring.status.errorMessages as error>
 									<div class="alert alert-warning">${error}</div>
@@ -66,7 +62,8 @@
 
 								<@spring.bind "record.street"/>
 								<input type = "text" name = "${spring.status.expression}" 
-								value = "${spring.status.value!""}" class="form-control" placeholder = "Street"/>
+								value = "${spring.status.value!""}" class="form-control" 
+								placeholder = "<@spring.message "phonebookrecord.placeholder.street"/>"/>
 								<br>
 								<#list spring.status.errorMessages as error>
 									<div class="alert alert-warning">${error}</div>
@@ -74,7 +71,8 @@
 								
 								<@spring.bind "record.email"/>
 								<input type = "text" name = "${spring.status.expression}" 
-								value = "${spring.status.value!""}" class="form-control" placeholder = "Email"/>
+								value = "${spring.status.value!""}" class="form-control" 
+								placeholder = "<@spring.message "phonebookrecord.placeholder.email"/>"/>
 								<br>
 								<#list spring.status.errorMessages as error>
 									<div class="alert alert-warning">${error}</div>
@@ -83,22 +81,16 @@
 								<@spring.bind "record.id"/>
 								<input type="hidden" name = "${spring.status.expression}" value="${spring.status.value}"/>
 								<button type = "submit" class="btn btn-info">
-									Update Record
+									<@spring.message "form.edit.button"/>
 								</button>
 								<input type="hidden"
 										name="${_csrf.parameterName}"
 										value="${_csrf.token}"/>
+								<a href = "<@spring.url "/phonebook"/>"><@spring.message "cancel"/></a>
 							</div>
 					</form>
-				
 			</div>
 		</div>
 	</div>
-	
-	<script>
-		function formSubmit() {
-			document.getElementById("logoutForm").submit();
-		}
-	</script>
 </body>
 </html>

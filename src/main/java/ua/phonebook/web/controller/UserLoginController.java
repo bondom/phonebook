@@ -1,8 +1,5 @@
-package ua.phonebook.controller;
+package ua.phonebook.web.controller;
 
-import java.security.Principal;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -19,15 +16,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.phonebook.model.User;
 import ua.phonebook.service.UserService;
 import ua.phonebook.service.exception.DuplicateLoginException;
+import ua.phonebook.support.Message;
 
 @Controller
 public class UserLoginController {
-	
-	
+
 	@Autowired
 	private UserService userService;
 	
-	
+	@Autowired
+	private Message message;
 	
 	@GetMapping(value = "/login")
 	public String login(HttpServletRequest request,
@@ -52,10 +50,10 @@ public class UserLoginController {
 		
 		try {
 			userService.registerUser(user);
-			attr.addFlashAttribute("success", "You are successfully registered");
+			attr.addFlashAttribute("success", message.getMessage("user.registration.success"));
 			return "redirect:/login";
 		} catch (DuplicateLoginException e) {
-			attr.addFlashAttribute("error","This login is already busy.");
+			attr.addFlashAttribute("error",message.getMessage("user.registration.failure"));
 			attr.addFlashAttribute
 					("org.springframework.validation.BindingResult.user",result);
 			attr.addFlashAttribute("user", user);

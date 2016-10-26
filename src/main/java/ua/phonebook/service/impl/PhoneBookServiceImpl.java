@@ -1,8 +1,9 @@
 package ua.phonebook.service.impl;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,7 @@ import ua.phonebook.model.PhoneBookRecord;
 import ua.phonebook.model.User;
 import ua.phonebook.service.PhoneBookService;
 import ua.phonebook.service.exception.InvalidIdentifier;
+import ua.phonebook.web.viewbean.FilterPhoneBookRecords;
 
 @Service
 @Transactional
@@ -24,10 +26,10 @@ public class PhoneBookServiceImpl implements PhoneBookService {
 	private BaseUserRepository userRepository;
 	
 	@Override
-	public List<PhoneBookRecord> getPhoneBookByUserLogin(String login) {
-		List<PhoneBookRecord> phoneBook = 
-				phoneBookRecordRepository.getByUser_Login(login);
-		return phoneBook;
+	public Page<PhoneBookRecord> getPhoneBookByUserLogin(String login,Pageable pageable) {
+		Page<PhoneBookRecord> page = 
+				phoneBookRecordRepository.getByUser_Login(login,pageable);
+		return page;
 	}
 
 	@Override
@@ -73,6 +75,15 @@ public class PhoneBookServiceImpl implements PhoneBookService {
 		phoneBookRecord.setUser(user);
 		phoneBookRecordRepository.save(phoneBookRecord);
 		return phoneBookRecord;
+	}
+
+	@Override
+	public Page<PhoneBookRecord> getFilteredPhoneBookByUserLogin(String login,FilterPhoneBookRecords filter,
+													Pageable pageable) {
+		Page<PhoneBookRecord> pageInfo= phoneBookRecordRepository
+				.findByUser_LoginAndFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCaseAndMobilePhoneContaining
+					(login,filter.getFirstName(), filter.getLastName(), filter.getMobilePhone(),pageable);
+		return pageInfo;
 	}
 
 	
