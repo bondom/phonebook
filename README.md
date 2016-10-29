@@ -13,5 +13,5 @@ alter table phone_book add constraint FKuser foreign key (user_id) references us
 
 <b>Paths to files in properties file:</b>
 
-filestorage.users.path=D:/users.json<br>
-filestorage.phonebookrecords.path=D:/phonebookrecords.json
+filestorage.users.path=path/to/users/storage<br>
+filestorage.phonebookrecords.path=path/to/phonebookrecords/storage
