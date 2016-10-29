@@ -10,3 +10,8 @@ create table users (id bigint not null, full_name varchar(255), login varchar(25
 alter table users add constraint UK_login unique (login);
 
 alter table phone_book add constraint FKuser foreign key (user_id) references users (id);
+
+Paths to files in properties file:
+
+filestorage.users.path=D:/users.json
+filestorage.phonebookrecords.path=D:/phonebookrecords.json
