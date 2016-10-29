@@ -7,7 +7,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import ua.phonebook.dao.BaseUserRepository;
 import ua.phonebook.model.User;
 
-@Profile("db")
+@Profile({"db"})
 @NoRepositoryBean
 public interface CustomUserRepository extends JpaRepository<User, Long>,
 											  BaseUserRepository{	

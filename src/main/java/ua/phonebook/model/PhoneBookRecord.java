@@ -26,38 +26,57 @@ public class PhoneBookRecord {
 	private long id;
 	
 	@Size(min = 4)
-	@Column(nullable = false)
+	@Column(name = "FIRST_NAME",nullable = false)
 	private String firstName;
 	
 	@Size(min = 4)
-	@Column(nullable = false)
+	@Column(name = "LAST_NAME",nullable = false)
 	private String lastName;
 	
 	@Size(min = 4)
-	@Column(nullable = false)
+	@Column(name="PATRONYMIC",nullable = false)
 	private String patronymic;
 	
-	@Column(nullable = false)
+	@Column(name="MOBILE_PHONE",nullable = false)
 	@Pattern(regexp = "^[+]380[(](50|63|6[6-8]|70|73|9\\d)[)]\\d{7}$")
 	private String mobilePhone;
 	
-	@Column
+	@Column(name="HOME_PHONE")
 	@Pattern(regexp = "^([+]380[(](\\d{2,4})[)]\\d{7}$)|")
 	private String homePhone;
 	
-	@Column
+	@Column(name="STREET")
 	private String street;
 	
 	@Email
-	@Column
+	@Column(name="EMAIL")
 	private String email;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn
+	@JoinColumn(name="USER_ID")
 	private User user;
 	
 	public PhoneBookRecord(){}
 	
+	public PhoneBookRecord(String firstName, String lastName, String patronymic, String mobilePhone, User user) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.patronymic = patronymic;
+		this.mobilePhone = mobilePhone;
+		this.user = user;
+	}
+	
+	public PhoneBookRecord(String firstName, String lastName, String patronymic, String mobilePhone) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.patronymic = patronymic;
+		this.mobilePhone = mobilePhone;
+	}
+
+
+
 	public long getId() {
 		return id;
 	}

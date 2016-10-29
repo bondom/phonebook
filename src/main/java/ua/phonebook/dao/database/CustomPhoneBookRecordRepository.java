@@ -11,5 +11,6 @@ import ua.phonebook.model.PhoneBookRecord;
 @NoRepositoryBean
 public interface CustomPhoneBookRecordRepository extends JpaRepository<PhoneBookRecord, Long>,
 											  BasePhoneBookRecordRepository{	
+	
 
 }

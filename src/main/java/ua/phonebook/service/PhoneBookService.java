@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import ua.phonebook.model.PhoneBookRecord;
 import ua.phonebook.service.exception.InvalidIdentifier;
+import ua.phonebook.service.exception.WrongLoginException;
 import ua.phonebook.web.viewbean.FilterPhoneBookRecords;
 
 public interface PhoneBookService {
@@ -24,14 +25,19 @@ public interface PhoneBookService {
 	public Page<PhoneBookRecord> getPhoneBookByUserLogin(String login,Pageable pageable);
 	
 	/**
-	 * Gets {@link PhoneBookRecord} from data storage, id of which equals to
-	 * {@code phoneBookRecordId}. If phoneBookRecord with such id doesn't exist,
-	 * exception is thrown
+	 * Gets {@link PhoneBookRecord} {@code phoneBookRecord} from data storage, id of which equals to
+	 * {@code phoneBookRecordId}.
+	 * <p>{@code phoneBookRecord} must be linked to {@link User}
+	 * {@code user} with login, passed to method. 
+	 * <p>If PhoneBookRecord with such id doesn't exist in data storage,
+	 * or it isn't linked to {@code user}, exception is thrown.
+	 * @param login login of User
 	 * @param phoneBookRecordId id of phoneBookRecord
-	 * @throws InvalidIdentifier if phoneBookRecord with such id doesn't exist
+	 * @throws InvalidIdentifier if phoneBookRecord with such id doesn't exist,
+	 * or it isn't linked to {@code user}.
 	 */
 	@PreAuthorize("isAuthenticated()")
-	public PhoneBookRecord getPhoneBookRecordById(long phoneBookRecordId) 
+	public PhoneBookRecord getPhoneBookRecordById(String login,long phoneBookRecordId) 
 									throws InvalidIdentifier;
 	
 	/**
@@ -40,10 +46,11 @@ public interface PhoneBookService {
 	 * @param login login of User
 	 * @param phoneBookRecord {@link PhoneBookRecord}, which must be saved
 	 * @return saved {@code PhoneBookRecord}
+	 * @throws WrongLoginException if User with such login doesn't exist
 	 */
 	@PreAuthorize("isAuthenticated()")
 	public PhoneBookRecord addPhoneBookRecord
-						(String login,PhoneBookRecord phoneBookRecord);
+						(String login,PhoneBookRecord phoneBookRecord) throws WrongLoginException;
 	
 	/**
 	 * Deletes {@link PhoneBookRecord} {@code phoneBookRecord} from data 
@@ -70,7 +77,8 @@ public interface PhoneBookService {
 	 * linked to {@code user}, exception is thrown.
 	 * @param login login of {@code User}
 	 * @param phoneBookRecord {@code PhoneBookRecord}
-	 * @throws InvalidIdentifier
+	 * @throws InvalidIdentifier if phoneBookRecord with such id doesn't exist, or it is not linked
+	 * to {@code user}
 	 */
 	@PreAuthorize("isAuthenticated()")
 	public PhoneBookRecord updatePhoneBookRecord(String login, PhoneBookRecord phoneBookRecord)

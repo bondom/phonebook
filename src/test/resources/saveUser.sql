@@ -1,0 +1,2 @@
+/*create table users(id int,login varchar(2),password varchar(2),fullName varchar(2),primary key(id));*/
+insert into users values(2000,'Test fullName','login','$2a$10$I7NxoV6tWLDtQ9QQ0QSTo.NqbnBdBH77W3PxJeH/YSqTQwW.j5m4.');

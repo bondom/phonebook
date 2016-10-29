@@ -21,6 +21,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import ua.phonebook.service.impl.UserDetailsServiceImpl;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -61,12 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	}
 	
-	/*@Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-            .userDetailsService(userDetailsService)
-            .passwordEncoder(new BCryptPasswordEncoder());
-    }*/
 	
 	@Bean
 	public AuthenticationProvider daoAuthenticationProvider() {

@@ -122,11 +122,11 @@ public class PhoneBookController {
 		}else{
 			try {
 				phoneBookRecord = 
-						phoneBookService.getPhoneBookRecordById(phoneBookRecordId);
+						phoneBookService.getPhoneBookRecordById(user.getName(),phoneBookRecordId);
 				model.addAttribute("record", phoneBookRecord);
 				return "editRecord";
 			} catch (InvalidIdentifier e) {
-				return "phonebook";
+				return "redirect:/phonebook";
 			}
 		}
 	}

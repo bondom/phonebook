@@ -1,24 +1,15 @@
 package ua.phonebook.model;
 
-import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name="USERS")
@@ -31,19 +22,25 @@ public class User {
 	private long id;
 	
 	@Pattern(regexp = "\\w{3,}")
-	@Column(unique = true)
+	@Column(name="LOGIN",unique = true)
 	private String login;
 	
 	@Size(min = 5)
-	@Column
+	@Column(name="PASSWORD")
 	private String password;
 	
 	@Size(min = 5)
-	@Column
+	@Column(name="FULL_NAME")
 	private String fullName;
 
 	public User(){};
 	
+	public User(String login, String password) {
+		super();
+		this.login = login;
+		this.password = password;
+	}
+
 	public long getId() {
 		return id;
 	}

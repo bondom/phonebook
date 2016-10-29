@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService{
 	private final ReentrantLock lock = new ReentrantLock(true);
 
 	@Override
-	public void registerUser(User user) throws DuplicateLoginException{
+	public User registerUser(User user) throws DuplicateLoginException{
 		String enteredPassword = user.getPassword();
 		String encodedPassword = new BCryptPasswordEncoder().encode(enteredPassword);
 		user.setPassword(encodedPassword);
@@ -46,5 +46,6 @@ public class UserServiceImpl implements UserService{
 		}finally{
 			lock.unlock();
 		}
+		return user;
 	}
 }

@@ -13,6 +13,7 @@ import ua.phonebook.model.PhoneBookRecord;
 import ua.phonebook.model.User;
 import ua.phonebook.service.PhoneBookService;
 import ua.phonebook.service.exception.InvalidIdentifier;
+import ua.phonebook.service.exception.WrongLoginException;
 import ua.phonebook.web.viewbean.FilterPhoneBookRecords;
 
 @Service
@@ -33,12 +34,20 @@ public class PhoneBookServiceImpl implements PhoneBookService {
 	}
 
 	@Override
-	public PhoneBookRecord getPhoneBookRecordById(long phoneBookRecordId) 
+	public PhoneBookRecord getPhoneBookRecordById(String login,long phoneBookRecordId) 
 					throws InvalidIdentifier{
 		PhoneBookRecord phoneBookRecord = 
 				phoneBookRecordRepository.findOne(phoneBookRecordId);
 		if(phoneBookRecord == null){
-			throw new InvalidIdentifier();
+			throw new InvalidIdentifier(
+					String.format("PhoneBookRecord with id={} doesn't exist in data storage", 
+					phoneBookRecordId));
+		}
+		User user = userRepository.getUserByLogin(login);
+		if(!phoneBookRecord.getUser().equals(user)){
+			throw new InvalidIdentifier(
+					String.format("PhoneBookRecord with id={} exists, but doesn't belong"
+							+ " to user with login={}", phoneBookRecordId,login));
 		}
 		return phoneBookRecord;
 	}
@@ -46,9 +55,13 @@ public class PhoneBookServiceImpl implements PhoneBookService {
 	@Override
 	public PhoneBookRecord addPhoneBookRecord(String login, PhoneBookRecord phoneBookRecord) {
 		User user = userRepository.getUserByLogin(login);
+		if(user==null){
+			throw new WrongLoginException(
+					String.format("Login={} is wrong",login));
+		}
 		phoneBookRecord.setUser(user);
-		phoneBookRecordRepository.save(phoneBookRecord);
-		return phoneBookRecord;
+		PhoneBookRecord savedPhoneBookRecord = phoneBookRecordRepository.save(phoneBookRecord);
+		return savedPhoneBookRecord;
 	}
 
 	@Override
@@ -68,13 +81,20 @@ public class PhoneBookServiceImpl implements PhoneBookService {
 													throws InvalidIdentifier{
 		PhoneBookRecord phoneBookRecordFromDataStorage = 
 				phoneBookRecordRepository.findOne(phoneBookRecord.getId());
+		if(phoneBookRecordFromDataStorage == null){
+			throw new InvalidIdentifier(
+					String.format("PhoneBookRecord with id={} doesn't exist in data storage", 
+					phoneBookRecord.getId()));
+		}
 		User user = userRepository.getUserByLogin(login);
 		if(!phoneBookRecordFromDataStorage.getUser().equals(user)){
-			throw new InvalidIdentifier();
+			throw new InvalidIdentifier(
+					String.format("PhoneBookRecord with id={} exists, but doesn't belong"
+							+ " to user with login={}", phoneBookRecord.getId(),login));
 		}
 		phoneBookRecord.setUser(user);
-		phoneBookRecordRepository.save(phoneBookRecord);
-		return phoneBookRecord;
+		PhoneBookRecord savedPhoneBookRecord = phoneBookRecordRepository.save(phoneBookRecord);
+		return savedPhoneBookRecord;
 	}
 
 	@Override

@@ -44,7 +44,7 @@
 								<@spring.bind "filter.mobilePhone"/>
 								<input type = "text" name = "${spring.status.expression}" 
 								value = "${spring.status.value!""}" class="form-control" 
-								placeholder = "<@spring.message "phonebookrecord.placeholder.mobilePhone"/>"/>
+								placeholder = "<@spring.message "phonebookrecord.search.placeholder.mobilePhone"/>"/>
 							</div>
 							<button type = "submit" class="btn btn-info">
 								<@spring.message "form.search.button"/>
@@ -81,11 +81,11 @@
 									<td>${phoneBookRecord.lastName}	</td>					
 									<td>${phoneBookRecord.patronymic}</td>
 									<td>${phoneBookRecord.mobilePhone}</td>
-									<td>${phoneBookRecord.homePhone}</td>
-									<td>${phoneBookRecord.street}</td>
-									<td>${phoneBookRecord.email}</td>
+									<td>${phoneBookRecord.homePhone!""}</td>
+									<td>${phoneBookRecord.street!""}</td>
+									<td>${phoneBookRecord.email!""}</td>
 									<td><form action = "<@spring.url "/phonebook/deleteRecord"/>" method = "Post" role = "form">
-										<input name="id" type="hidden" value="${phoneBookRecord.id}"/>
+										<input name="id" type="hidden" value="${phoneBookRecord.id?c}"/>
 										<button type = "submit" class="btn btn-info">
 											<@spring.message "form.delete.button"/>
 										</button>
@@ -93,7 +93,7 @@
 												name="${_csrf.parameterName}"
 												value="${_csrf.token}"/>
 									</form></td>
-									<td><a href = "<@spring.url "/phonebook/editRecord?id=${phoneBookRecord.id}"/>">
+									<td><a href = "<@spring.url "/phonebook/editRecord?id=${phoneBookRecord.id?c}"/>">
 										<@spring.message "form.edit.button"/></a>
 									</td>
 								</tr>

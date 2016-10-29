@@ -16,9 +16,10 @@ public interface UserService {
 	 * @param user {@link User}
 	 * @throws DuplicateLoginException if User with the same login already exists
 	 * in data storage.
+	 * @return saved User
 	 */
 	@PreAuthorize("isAnonymous()")
-	public void registerUser(User user) throws DuplicateLoginException;
+	public User registerUser(User user) throws DuplicateLoginException;
 	
 	
 }

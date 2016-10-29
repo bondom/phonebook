@@ -165,7 +165,8 @@ public class FilePhoneBookRecordRepositoryImpl implements FilePhoneBookRecordRep
 	}
 	
 	@Override
-	public Page<PhoneBookRecord> findByUser_LoginAndFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCaseAndMobilePhoneContaining(
+	public Page<PhoneBookRecord> 
+		findByUser_LoginAndFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCaseAndMobilePhoneContaining(
 			String login,String firstName, String lastName, String mobilePhone,Pageable pageable) {
 		final int pageNumber = pageable.getPageNumber();
 		final int pageSize = pageable.getPageSize();
