@@ -1,5 +1,5 @@
 
-SQL queries for creating all necessary tables:
+<b>SQL queries for creating all necessary tables:<b>
 
 create table hibernate_sequences (sequence_name varchar(255) not null, 	sequence_next_hi_value bigint, primary key (sequence_name));
 
@@ -11,7 +11,7 @@ alter table users add constraint UK_login unique (login);
 
 alter table phone_book add constraint FKuser foreign key (user_id) references users (id);
 
-Paths to files in properties file:
+<b>Paths to files in properties file:<b>
 
 filestorage.users.path=D:/users.json
 filestorage.phonebookrecords.path=D:/phonebookrecords.json
