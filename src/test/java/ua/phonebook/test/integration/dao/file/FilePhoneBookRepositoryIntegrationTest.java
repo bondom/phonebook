@@ -1,4 +1,4 @@
-package ua.phonebook.test.integration.dao;
+package ua.phonebook.test.integration.dao.file;
 
 import static org.junit.Assert.*;
 import java.io.File;
@@ -17,13 +17,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ua.phonebook.dao.filestorage.FilePhoneBookRecordRepository;
+import ua.phonebook.dao.BasePhoneBookRecordRepository;
 import ua.phonebook.model.PhoneBookRecord;
 import ua.phonebook.model.User;
 
 /**
  * This class does integration tests with file, path to it is represented in 
- * {@code TestPropertySource}
+ * {@code TestPropertySource} of {@link FileRepositoryIntegrationConfiguration} class.
  *
  */
 @RunWith(SpringRunner.class)
@@ -38,7 +38,7 @@ public class FilePhoneBookRepositoryIntegrationTest {
 	private String filePathToUsers;
 	
 	@Autowired
-	private FilePhoneBookRecordRepository filePhonebookRepo;
+	private BasePhoneBookRecordRepository filePhonebookRepo;
 	
 	private File temporaryStorage;
 	
@@ -164,9 +164,12 @@ public class FilePhoneBookRepositoryIntegrationTest {
 		String mobilePhone="00";
 		
 		//getting records
-		Page<PhoneBookRecord> pageInfo=filePhonebookRepo
-				.findByUser_LoginAndFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCaseAndMobilePhoneContaining
-					(owner.getLogin(),firstName,lastName,mobilePhone,new PageRequest(0, 10));
+		Page<PhoneBookRecord> pageInfo=
+				filePhonebookRepo.findFilteredByUserLogin(owner.getLogin(),
+														  firstName,
+														  lastName,
+														  mobilePhone,
+														  new PageRequest(0, 10));
 	
 		List<PhoneBookRecord> filteredRecords = pageInfo.getContent();
 		assertTrue(pageInfo.getNumberOfElements()==2);

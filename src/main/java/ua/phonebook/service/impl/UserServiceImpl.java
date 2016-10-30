@@ -3,7 +3,6 @@ package ua.phonebook.service.impl;
 
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

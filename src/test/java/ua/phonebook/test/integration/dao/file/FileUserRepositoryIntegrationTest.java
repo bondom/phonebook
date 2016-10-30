@@ -1,4 +1,4 @@
-package ua.phonebook.test.integration.dao;
+package ua.phonebook.test.integration.dao.file;
 
 import static org.junit.Assert.*;
 import java.io.File;
@@ -14,12 +14,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ua.phonebook.dao.filestorage.FileUserRepository;
+import ua.phonebook.dao.BaseUserRepository;
 import ua.phonebook.model.User;
 
 /**
  * This class does integration tests with file, path to it is represented in 
- * {@code TestPropertySource}
+ * {@code TestPropertySource} of {@link FileRepositoryIntegrationConfiguration} class.
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = FileRepositoryIntegrationConfiguration.class)
@@ -33,7 +33,7 @@ public class FileUserRepositoryIntegrationTest {
 	private String filePathToPhoneBookRecords;
 	
 	@Autowired
-	private FileUserRepository fileRepo;
+	private BaseUserRepository fileRepo;
 	
 	private File temporaryStorage;
 	

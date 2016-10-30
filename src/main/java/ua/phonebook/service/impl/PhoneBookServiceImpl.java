@@ -100,9 +100,13 @@ public class PhoneBookServiceImpl implements PhoneBookService {
 	@Override
 	public Page<PhoneBookRecord> getFilteredPhoneBookByUserLogin(String login,FilterPhoneBookRecords filter,
 													Pageable pageable) {
-		Page<PhoneBookRecord> pageInfo= phoneBookRecordRepository
-				.findByUser_LoginAndFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCaseAndMobilePhoneContaining
-					(login,filter.getFirstName(), filter.getLastName(), filter.getMobilePhone(),pageable);
+		Page<PhoneBookRecord> pageInfo= 
+				phoneBookRecordRepository.findFilteredByUserLogin(
+													login,
+													filter.getFirstName(), 
+													filter.getLastName(), 
+													filter.getMobilePhone(),
+													pageable);
 		return pageInfo;
 	}
 

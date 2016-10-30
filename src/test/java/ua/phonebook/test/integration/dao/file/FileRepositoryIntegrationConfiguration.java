@@ -1,4 +1,4 @@
-package ua.phonebook.test.integration.dao;
+package ua.phonebook.test.integration.dao.file;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

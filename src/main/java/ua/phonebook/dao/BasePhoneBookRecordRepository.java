@@ -25,7 +25,21 @@ public interface BasePhoneBookRecordRepository {
 	
 	public PhoneBookRecord findOne(long id);
 	
-	public Page<PhoneBookRecord> 
-	findByUser_LoginAndFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCaseAndMobilePhoneContaining
-						(String login,String firstName,String lastName,String phoneNumber,Pageable pageable);
+	/**
+	 * Gets page with {@code list} of {@link PhoneBookRecord}s, which are linked with {@link User},
+	 * login of which is passed to method. 
+	 * <p>Records in result {@code list} meet following demands:
+	 * <ul>
+	 * 	<li>record.firstName contains {@code firstName} regardless of case</li>
+	 *  <li>record.lastName contains {@code lastName} regardless of case</li>
+	 *  <li>record.mobilePhone contains {@code mobilePhone}</li>
+	 * </ul>
+	 * @param login - login of {@code User}
+	 * @param firstName
+	 * @param lastName
+	 * @param mobilePhone
+	 * @param pageable
+	 */
+	public Page<PhoneBookRecord> findFilteredByUserLogin
+						(String login,String firstName,String lastName,String mobilePhone,Pageable pageable);
 }
