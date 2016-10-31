@@ -90,7 +90,11 @@ public class FileUserRepositoryImpl implements FileUserRepository {
 		}
 		return user;
 	}
-
+	
+	/**
+	 * Returns array of String, represented {@link User} objects in json.
+	 * If file is empty, null is returned.
+	 */
 	private String[] getAllUsersInJson(){
 		String wholeFile = "";
 		readLock.lock();

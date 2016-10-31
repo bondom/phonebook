@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalLong;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -59,7 +60,7 @@ public class FilePhoneBookRecordRepositoryImpl implements FilePhoneBookRecordRep
 		
 		long numberOfRecords = 0;
 		if(file.length()>0){
-			numberOfRecords = getAllPhoneBookRecords().size();
+			numberOfRecords = getBiggestId(getAllPhoneBookRecords());
 		}
 		
 		lastSavedId= new AtomicLong(numberOfRecords);
@@ -278,5 +279,14 @@ public class FilePhoneBookRecordRepositoryImpl implements FilePhoneBookRecordRep
     		}
     	}
     	return paginatedPhoneBook;
+	}
+	
+	private long getBiggestId(List<PhoneBookRecord> list){
+		OptionalLong optional = 
+				list.stream().mapToLong(record -> record.getId()).max();
+		if(optional.isPresent()){
+			return optional.getAsLong();
+		}
+		return 0L;
 	}
 }
