@@ -12,6 +12,7 @@ import java.lang.reflect.Type;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import com.google.gson.Gson;
@@ -21,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import ua.phonebook.dao.filestorage.FileUserRepository;
 import ua.phonebook.model.User;
 
+@Profile("!db")
 @Repository
 public class FileUserRepositoryImpl implements FileUserRepository {
 

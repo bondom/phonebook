@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,7 @@ import ua.phonebook.dao.filestorage.FilePhoneBookRecordRepository;
 import ua.phonebook.dao.filestorage.comparator.PhoneBookRecordComparatorById;
 import ua.phonebook.model.PhoneBookRecord;
 
+@Profile("!db")
 @Repository
 public class FilePhoneBookRecordRepositoryImpl implements FilePhoneBookRecordRepository {
 
