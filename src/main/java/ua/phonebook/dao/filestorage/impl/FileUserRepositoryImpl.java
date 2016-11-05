@@ -1,14 +1,18 @@
 package ua.phonebook.dao.filestorage.impl;
 
-import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -71,19 +75,22 @@ public class FileUserRepositoryImpl implements FileUserRepository {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public User saveAndFlush(User user) {
 		user.setId(lastSavedId.incrementAndGet());
 		String jsonUser = gson.toJson(user);
 		writeLock.lock();
 		try{
-			File file = new File(fileLocation);
-		
-			try(FileWriter writer = new FileWriter(file,true)){
-				if(file.length()!=0)
+			Path file = Paths.get(fileLocation);
+			
+			try(BufferedWriter writer = 
+					Files.newBufferedWriter(file,StandardOpenOption.WRITE)){
+				
+				if(new File(fileLocation).length()!=0)
 					writer.append(";");
+				
 				writer.append(jsonUser);
+		
 			}catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -98,26 +105,22 @@ public class FileUserRepositoryImpl implements FileUserRepository {
 	 * If file is empty, null is returned.
 	 */
 	private String[] getAllUsersInJson(){
-		String wholeFile = "";
+		List<String> allLines= null;
 		readLock.lock();
-		try{
-	        File file = new File(fileLocation);
-	        if(file.length()==0){
-	        	return null;
-	        }
-	        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-	        	String str;
-	    	    while ((str = reader.readLine()) != null){
-	    	    	wholeFile+= str.trim();
-	    	    }
-	        }catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		try {
+			if(new File(fileLocation).length() == 0){
+				return null;
 			}
+			allLines= Files.readAllLines(Paths.get(fileLocation));
+		}catch (IOException e1) {
+			e1.printStackTrace();
 		}finally{
 			readLock.unlock();
 		}
-        String[] jsonUsers = wholeFile.split(";");
+		StringBuilder resultString = new StringBuilder();
+		allLines.forEach(line -> resultString.append(line.trim()));
+		
+        String[] jsonUsers = resultString.toString().split(";");
     	return jsonUsers;
 	}
 }

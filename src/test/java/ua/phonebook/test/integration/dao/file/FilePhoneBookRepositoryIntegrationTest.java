@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ua.phonebook.dao.BasePhoneBookRecordRepository;
@@ -22,12 +24,13 @@ import ua.phonebook.model.PhoneBookRecord;
 import ua.phonebook.model.User;
 
 /**
- * This class does integration tests with file, path to it is represented in 
- * {@code TestPropertySource} of {@link FileRepositoryIntegrationConfiguration} class.
- *
+ * This class does integration tests with files, paths to them are represented in 
+ * {@code TestPropertySource}.
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = FileRepositoryIntegrationConfiguration.class)
+@TestPropertySource(properties = {"filestorage.phonebookrecords.path=D:/phonebookrepotest.json",
+					"filestorage.users.path=D:/userrepotest.json"})
 @ActiveProfiles({"file","filerepotest"})
 public class FilePhoneBookRepositoryIntegrationTest {
 	
@@ -42,17 +45,22 @@ public class FilePhoneBookRepositoryIntegrationTest {
 	
 	private File temporaryStorage;
 	
-	private File temporaryUsersStorage;
+	//we use this variable only for deleting file, created
+	//by @PostConstruct of repository implementation
+	private static File temporaryUsersStorage;
 	
 	private User owner;
 	
 	private PhoneBookRecord firstRecord;
 	
 	@Before
-	public void getInstanceOfTemporaryStoragesAndSaveOneRecord() throws IOException, NoSuchFieldException, 
+	public void getInstancesOfTemporaryStoragesAndSaveOneRecord() throws IOException, NoSuchFieldException, 
 				SecurityException, IllegalArgumentException, IllegalAccessException{
 		temporaryStorage = new File(filePath);
 		temporaryUsersStorage = new File(filePathToUsers);
+		//creating test file
+		temporaryStorage.createNewFile();
+		
 		owner = new User("testlogin","testpass");
 		owner.setFullName("testfullname");
 		owner.setId(1);
@@ -63,8 +71,15 @@ public class FilePhoneBookRepositoryIntegrationTest {
 	}
 	
 	@After
-	public void deleteTemporaryStorages(){
+	public void deleteTemporaryStorage(){
 		temporaryStorage.delete();
+	}
+	
+	@AfterClass
+	public static void deleteUsersStorageCreatedByRepoImpl(){
+		//because this is integration test, we are doing autowiring,
+		//and all file repository implementations are initialized by Spring
+		//so we must delete storage, which is created by @PostConstruct method
 		temporaryUsersStorage.delete();
 	}
 	

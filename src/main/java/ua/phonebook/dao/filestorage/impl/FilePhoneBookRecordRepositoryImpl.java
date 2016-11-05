@@ -1,12 +1,12 @@
 package ua.phonebook.dao.filestorage.impl;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -93,7 +93,7 @@ public class FilePhoneBookRecordRepositoryImpl implements FilePhoneBookRecordRep
 		return page;
 	}
 
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	public PhoneBookRecord save(final PhoneBookRecord phoneBookRecord) {
 		boolean itIsUpdating = true;
@@ -102,29 +102,19 @@ public class FilePhoneBookRecordRepositoryImpl implements FilePhoneBookRecordRep
 			phoneBookRecord.setId(lastSavedId.incrementAndGet());
 		}
 		
+		
 		if(itIsUpdating){
 			List<PhoneBookRecord> list = getAllPhoneBookRecords();
-			List<PhoneBookRecord> listForSaving= list.stream().filter(record -> record.getId()!=phoneBookRecord.getId())
-			.collect(Collectors.toList());
+			//delete object with id of updated object from list with all records
+			List<PhoneBookRecord> listForSaving= 
+					list.stream()
+						.filter(record -> record.getId()!=phoneBookRecord.getId())
+						.collect(Collectors.toList());
+			//add updated object to list and write to file
 			listForSaving.add(phoneBookRecord);
 			writeResultListToFile(listForSaving);
 		}else{
-			String jsonPhoneBookRecord = gson.toJson(phoneBookRecord);
-			writeLock.lock();
-			try{
-				File file = new File(filePhoneBookLocation);
-				
-				try(BufferedWriter writer = new BufferedWriter(new FileWriter(file,true))){
-					if(file.length()!=0){
-						writer.append(",");
-					}
-					writer.append(jsonPhoneBookRecord);
-				}catch (IOException e) {
-					e.printStackTrace();
-				}
-			}finally{
-				writeLock.unlock();
-			}
+			addRecordToFile(phoneBookRecord);
 		}
 		
 		return phoneBookRecord;
@@ -208,29 +198,26 @@ public class FilePhoneBookRecordRepositoryImpl implements FilePhoneBookRecordRep
 	 * file, located on {@link #filePhoneBookLocation}
 	 */
 	private List<PhoneBookRecord> getAllPhoneBookRecords(){
-		String wholeFile="";
+		List<String> allLines= new ArrayList<>();
 		readLock.lock();
 		try{
-			File file = new File(filePhoneBookLocation);
-	        if(file.length()==0){
+	        if(new File(filePhoneBookLocation).length()==0){
 	        	return new ArrayList<>();
 	        }
-	        
-	        try(BufferedReader reader = new BufferedReader(new FileReader(file))) {
-	        	String str;
-	    	    while ((str = reader.readLine()) != null){
-	    	    	wholeFile+= str.trim();
-	    	    }
-	        }catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	        allLines= Files.readAllLines(Paths.get(filePhoneBookLocation));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}finally{
 			readLock.unlock();
-		} 
-	    wholeFile="["+wholeFile+"]";
+		}
+		//converting from List of lines to json array
+		StringBuilder resultString = new StringBuilder();
+		allLines.forEach(line -> resultString.append(line.trim()));
+	    String arrayOfRecordsInJson = "["+resultString+"]";
+	    
+	    //converting to List of Java objects
     	Type type = new TypeToken<List<PhoneBookRecord>>() {}.getType();
-    	List<PhoneBookRecord> list = gson.fromJson(wholeFile, type);
+    	List<PhoneBookRecord> list = gson.fromJson(arrayOfRecordsInJson, type);
 		
     	return list;
 	}
@@ -244,8 +231,9 @@ public class FilePhoneBookRecordRepositoryImpl implements FilePhoneBookRecordRep
 		
 		writeLock.lock();
 		try{
-			try(BufferedWriter writer = new BufferedWriter
-								(new FileWriter(filePhoneBookLocation,false))){
+			try(BufferedWriter writer = 
+					Files.newBufferedWriter(Paths.get(filePhoneBookLocation), 
+											StandardOpenOption.TRUNCATE_EXISTING)){
 		    	Type type = new TypeToken<List<PhoneBookRecord>>() {}.getType();
 		    	String str = gson.toJson(resultList,type);
 		    	str = str.replace('[', ' ')
@@ -290,5 +278,22 @@ public class FilePhoneBookRecordRepositoryImpl implements FilePhoneBookRecordRep
 			return optional.getAsLong();
 		}
 		return 0L;
+	}
+	
+	private void addRecordToFile(PhoneBookRecord phoneBookRecord){
+		String jsonPhoneBookRecord = gson.toJson(phoneBookRecord);
+		writeLock.lock();
+		try(BufferedWriter writer = 
+				Files.newBufferedWriter(Paths.get(filePhoneBookLocation), 
+										StandardOpenOption.APPEND)){
+			if(new File(filePhoneBookLocation).length()!=0){
+				writer.append(",");
+			}
+			writer.append(jsonPhoneBookRecord);
+		}catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			writeLock.unlock();
+		}
 	}
 }
