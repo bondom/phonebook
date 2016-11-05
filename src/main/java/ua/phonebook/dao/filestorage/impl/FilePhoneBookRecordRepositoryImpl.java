@@ -104,6 +104,14 @@ public class FilePhoneBookRecordRepositoryImpl implements FilePhoneBookRecordRep
 		
 		
 		if(itIsUpdating){
+			/*Due to bad initial structure of file storage
+			snippet below needs to be accessed by only one thread
+			per time, because there is can be situation when two users
+			simultaneously update their records, so first user got list,
+			in that moment he is updating it with updated record whilst second user
+			is getting list from file(the same as was retrieved by first user).
+			In end, updating of record by first user will be lost.
+			*/
 			List<PhoneBookRecord> list = getAllPhoneBookRecords();
 			//delete object with id of updated object from list with all records
 			List<PhoneBookRecord> listForSaving= 
