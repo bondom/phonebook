@@ -112,15 +112,17 @@ public class FilePhoneBookRecordRepositoryImpl implements FilePhoneBookRecordRep
 			is getting list from file(the same as was retrieved by first user).
 			In end, updating of record by first user will be lost.
 			*/
-			List<PhoneBookRecord> list = getAllPhoneBookRecords();
-			//delete object with id of updated object from list with all records
-			List<PhoneBookRecord> listForSaving= 
-					list.stream()
-						.filter(record -> record.getId()!=phoneBookRecord.getId())
-						.collect(Collectors.toList());
-			//add updated object to list and write to file
-			listForSaving.add(phoneBookRecord);
-			writeResultListToFile(listForSaving);
+			synchronized (this) {
+				List<PhoneBookRecord> list = getAllPhoneBookRecords();
+				//delete object with id of updated object from list with all records
+				List<PhoneBookRecord> listForSaving= 
+						list.stream()
+							.filter(record -> record.getId()!=phoneBookRecord.getId())
+							.collect(Collectors.toList());
+				//add updated object to list and write to file
+				listForSaving.add(phoneBookRecord);
+				writeResultListToFile(listForSaving);
+			}
 		}else{
 			addRecordToFile(phoneBookRecord);
 		}
