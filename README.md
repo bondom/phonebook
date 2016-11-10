@@ -13,18 +13,18 @@ alter table phone_book add constraint FKuser foreign key (user_id) references us
 
 <b>Example of external config file:</b>
 
- JPA
+ <i>JPA</i>
 <br>spring.datasource.url: jdbc:mysql://localhost:3306/defaultschema
 <br>spring.datasource.username=root
 <br>spring.datasource.password=*******
 <br>spring.datasource.driverClassName=com.mysql.jdbc.Driver
 <br>spring.jpa.hibernate.ddl-auto=update
 	
- File storage
+ <i>File storage</i>
 <br>filestorage.users.path=D:/users.json
 <br>filestorage.phonebookrecords.path=D:/phonebookrecords.json
 
- Choosing type of data storage
+ <i>Choosing type of data storage</i>
 <br>spring.profiles.active=db
- or 
+ <i>or</i> 
 <br>spring.profiles.active=file 
