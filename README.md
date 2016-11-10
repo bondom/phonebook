@@ -11,7 +11,19 @@ alter table users add constraint UK_login unique (login);
 
 alter table phone_book add constraint FKuser foreign key (user_id) references users (id);
 
-<b>Paths to files in properties file:</b>
+<b>Example of external config file:</b>
 
-filestorage.users.path=path/to/users/storage<br>
-filestorage.phonebookrecords.path=path/to/phonebookrecords/storage
+# JPA
+spring.datasource.url: jdbc:mysql://localhost:3306/defaultschema
+spring.datasource.username=root
+spring.datasource.password=*******
+spring.datasource.driverClassName=com.mysql.jdbc.Driver
+spring.jpa.hibernate.ddl-auto=update
+	
+# File storage
+filestorage.users.path=D:/users.json
+filestorage.phonebookrecords.path=D:/phonebookrecords.json
+
+# Choosing type of data storage
+spring.profiles.active=db
+#spring.profiles.active=file 
