@@ -7,8 +7,8 @@
 </head>
 <body>
 	<div class="container">
-	  	<div class="panel panel-default">
-	  		<#include "/fragments/top.ftl">
+	  	<div class="panel panel-primary">
+	  		<#include "/fragments/header-login.ftl">
 			<div class="panel-body" style = "margin: 0px">
 				<div class="row">
 				  <div class="col-md-4"></div>

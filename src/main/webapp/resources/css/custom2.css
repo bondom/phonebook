@@ -1,0 +1,53 @@
+body {
+   font-family: 'Open Sans', sans-serif;
+}
+h2:link{
+	text-decoration: none;
+}
+#bootstrap-overrides .add-input{
+	width:130px; 
+}
+
+.top-panel{
+	padding:0px;
+	height:70px;
+}
+.logout-btn{
+	float:right;
+	height:30px;
+	line-height:30px;
+	margin:0;
+	padding-top:0;
+	padding-bottom:0;
+	border:1px solid #083155;
+	border-top:0px;
+	border-right:0px;
+	border-radius:0px;
+	color:#083155;
+	font-size:14px;
+}
+.logout-btn:hover{
+	color:#083155;
+}
+#logo{
+	height:70px;
+	background-color: white;
+	height:70px;
+	line-height:70px;
+	margin:0;
+	margin-left:100px;
+	padding-top:0;
+	padding-bottom:0;
+	border:none;
+	border-radius:0px;
+	color:#083155;
+	font-size:19px;
+}
+#logo:hover{
+	cursor:default;
+}
+
+.bottom-divider{
+	border-bottom:1px solid #337ab7;
+	margin-bottom:15px;
+}
