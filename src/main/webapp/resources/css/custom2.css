@@ -4,30 +4,17 @@ body {
 h2:link{
 	text-decoration: none;
 }
+.panel-body{
+	padding-bottom:0px;
+}
 #bootstrap-overrides .add-input{
-	width:130px; 
+	width:200px; 
 }
 
+/*Top panel with logo and logout button*/
 .top-panel{
 	padding:0px;
 	height:70px;
-}
-.logout-btn{
-	float:right;
-	height:30px;
-	line-height:30px;
-	margin:0;
-	padding-top:0;
-	padding-bottom:0;
-	border:1px solid #083155;
-	border-top:0px;
-	border-right:0px;
-	border-radius:0px;
-	color:#083155;
-	font-size:14px;
-}
-.logout-btn:hover{
-	color:#083155;
 }
 #logo{
 	height:70px;
@@ -46,8 +33,122 @@ h2:link{
 #logo:hover{
 	cursor:default;
 }
+.logout-btn{
+	float:right;
+	height:30px;
+	line-height:30px;
+	margin:-1px;
+	padding-top:0;
+	padding-bottom:0;
+	border:none;
+	border-radius:0;
+	border-top-right-radius:3px;
+	color:#083155;
+	font-size:14px;
+	background-color: #BEDBF5;
+}
 
-.bottom-divider{
-	border-bottom:1px solid #337ab7;
-	margin-bottom:15px;
+/*Styling adding new records*/
+.add-rec{
+	position:fixed;
+	width:0px;
+	z-index:10;
+	overflow:hidden;
+	border:none;
+	background-color: #BEDBF5;
+	float:left;
+}
+.new-button{
+	padding:10px 20px 10px 20px;
+	background-color: white;
+	border:2px solid #337ab7;
+	border-left:none;
+	outline:none;
+	margin-left:-15px;
+	float:left;
+}
+.back{
+	position:absolute;
+	right:0px;
+	top:0px;
+}
+.back-button{
+	padding:10px 20px 10px 20px;
+	background-color: #BEDBF5;
+	border:none;
+	outline:none;
+}
+
+/*Searching of records*/
+.search-col{
+	padding-right:0px;
+}
+.search-panel{
+	float:right;
+	margin-right:-2px;	
+	height:44px;
+}
+.search-form-wrapper{
+	width:0px;	
+	float:left;
+	margin-right:0px;
+	background-color: #BEDBF5;
+	height:44px;
+}
+.search-form{
+	padding:4px;
+	display:none;
+}
+
+.top-search-button{
+	height:44px;
+	width:44px;
+	
+	background-color: transparent;
+	background-image: url("../images/search.png");
+	background-size: 40px 40px;
+	background-repeat: no-repeat;  
+	border: 2px solid #337ab7;
+	border-right:1px solid #337ab7;
+	outline:none;
+}
+.top-search-button:hover{
+	background-color: #337ab7 !important;
+}
+.top-search-button:focus{
+	background-color: #337ab7 !important;
+}
+
+/*Styling table*/
+.table-wrapper{
+	margin:0px;
+	padding:0px;
+}
+.record-table{
+	clear:both;	
+	overflow:auto;
+	width:100%;
+	margin:0px;
+	padding:0px;
+}
+
+.table-striped{
+	border-top:1px solid #337ab7;
+	margin-top:10px;
+	margin-bottom:0px;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+ 	background-color: #CBDBFA;
+}
+.table-striped > tbody >tr:last-child{
+	border-bottom: 5px solid #337ab7;
+}
+.pagination{
+	margin:0px;
+}
+.pagination > li > a:link,
+.pagination > li > a:focus,
+.pagination > li > a:hover {
+	border-radius: 0px;
+	padding:15px 20px;
 }

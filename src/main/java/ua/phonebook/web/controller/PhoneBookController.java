@@ -30,7 +30,7 @@ import ua.phonebook.web.viewbean.FilterPhoneBookRecords;
 @RequestMapping("/phonebook")
 public class PhoneBookController {
 	
-	private static final int NUMBER_PHONE_BOOK_RECORDS_ON_PAGE=3;
+	private static final int NUMBER_PHONE_BOOK_RECORDS_ON_PAGE=6;
 	
 	@Autowired
 	private PhoneBookService phoneBookService;

@@ -11,6 +11,8 @@
 		<div class="panel panel-primary">
 			<#include "/fragments/header.ftl">
 			<div class="panel-body">
+				
+				
 				<div class="row">
 					<div class="col-md-2"></div>
 					<div class="col-md-8">
@@ -23,45 +25,16 @@
 					<div class="col-md-2"></div>
 				</div>
 				
-				<div class="row bottom-divider">
-					<div class="col-md-2"></div>
-					<div class="col-md-10">
-						<form action = "<@spring.url "/phonebook"/>" method = "Get" class="form-inline">
-							<div class="form-group">
-								<@spring.bind "filter.firstName"/>
-								<input type = "text" name = "${spring.status.expression}" 
-								value = "${spring.status.value!""}" class="form-control" 
-								placeholder = "<@spring.message "phonebookrecord.placeholder.firstName"/>"/>
-							</div>
-							<div class="form-group">
-								<@spring.bind "filter.lastName"/>
-								<input type = "text" name = "${spring.status.expression}" 
-								value = "${spring.status.value!""}" class="form-control" 
-								placeholder = "<@spring.message "phonebookrecord.placeholder.lastName"/>"/>
-							</div>
-							<div class="form-group">
-								<@spring.bind "filter.mobilePhone"/>
-								<input type = "text" name = "${spring.status.expression}" 
-								value = "${spring.status.value!""}" class="form-control mobile-phone" 
-								placeholder = "<@spring.message "phonebookrecord.search.placeholder.mobilePhone"/>"/>
-							</div>
-							<button type = "submit" class="btn btn-info">
-								<@spring.message "form.search.button"/>
-							</button>
-							<a href = "<@spring.url "/phonebook"/>">Reset</a>
-						</form>
-					</div>
-				</div>
-				<div class="row">
+				<div class="row add-rec">
 				  	<div class="col-md-12">
-	                	<form action = "<@spring.url "/phonebook/addRecord"/>" method = "Post" role = "form" class = "form-inline">
+	                	<form action = "<@spring.url "/phonebook/addRecord"/>" method = "Post" role = "form">
 							<div class="form-group">
-								<h4 class="text-center"><@spring.message "form.addRecord.name"/>:</h4>
+								<h4><@spring.message "form.addRecord.name"/>:</h4>
 							</div>
 							<div class="form-group">
 								<@spring.bind "record.firstName"/>
 								<input type = "text" name = "${spring.status.expression}" 
-								value = "${spring.status.value!""}" class="form-control add-input" 
+								value = "${spring.status.value!""}" class="form-control add-input first-field" 
 								placeholder = "<@spring.message "phonebookrecord.placeholder.firstName"/>">
 								<#list spring.status.errorMessages as error>
 									<div class="alert alert-warning">${error}</div>
@@ -131,9 +104,57 @@
 							</div>
 					</form>
 	                </div>
+	                <div class="back">
+	                	<button class="back-button">
+							Back
+						</button>
+					</div>
 	            </div>
-				<div class="row" style="overflow:auto">
-					<div class="col-md-12">
+					
+					
+				
+				<div class="row">
+					<div class="col-md-2">
+						<button class="new-button">
+							New
+						</button>
+					</div>
+					<div class="col-md-10 search-col">
+						<div class="search-panel">
+							<div class="search-form-wrapper">
+								<form action = "<@spring.url "/phonebook"/>" method = "Get" 
+									class="form-inline search-form">
+									<div class="form-group">
+										<@spring.bind "filter.firstName"/>
+										<input type = "text" name = "${spring.status.expression}" 
+										value = "${spring.status.value!""}" class="form-control first-field"
+										placeholder = "<@spring.message "phonebookrecord.placeholder.firstName"/>"/>
+									</div>
+									<div class="form-group">
+										<@spring.bind "filter.lastName"/>
+										<input type = "text" name = "${spring.status.expression}" 
+										value = "${spring.status.value!""}" class="form-control" 
+										placeholder = "<@spring.message "phonebookrecord.placeholder.lastName"/>"/>
+									</div>
+									<div class="form-group">
+										<@spring.bind "filter.mobilePhone"/>
+										<input type = "text" name = "${spring.status.expression}" 
+										value = "${spring.status.value!""}" class="form-control mobile-phone" 
+										placeholder = "<@spring.message "phonebookrecord.search.placeholder.mobilePhone"/>"/>
+									</div>
+									<button type = "submit" class="btn btn-info">
+										<@spring.message "form.search.button"/>
+									</button>
+									<a href = "<@spring.url "/phonebook"/>">Reset</a>
+								</form>
+							</div>
+							<div style="float:left;">
+			                	<input type="button" class="top-search-button">
+							</div>
+						</div>
+				</div>
+				<div class="row record-table">
+					<div class="col-md-12 table-wrapper">
 					<table class="table table-striped">
 	                    <#list phoneBook>
 	                    	 <#assign counter=initialId>
@@ -148,7 +169,6 @@
 		                            <td><@spring.message "phonebookrecord.table.street"/></td>
 		                            <td><@spring.message "phonebookrecord.table.email"/></td> 
 		                            <td></td> 
-		                            <td></td>                             
 		                        </tr>
 		                    </thead>
 	                    	<#items as phoneBookRecord>
