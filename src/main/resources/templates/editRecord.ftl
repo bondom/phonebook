@@ -7,14 +7,14 @@
 </head>
 <body>
 	<div class="container">
-		<div class="panel panel-default">
-			<#include "/fragments/top.ftl">
+		<div class="panel panel-primary">
 			<#include "/fragments/header.ftl">
 			<div class="panel-body" style = "margin: 0px">
 				<h3><@spring.message "form.edit.name"/>:</h3>
 				<form action = "<@spring.url "/phonebook/updateRecord"/>" method = "Post" role = "form">
-						<div class="form-group col-xs-5" >
-	
+						<div class="form-group col-lg-4 col-md-6 col-sm-8 col-xs-12" >
+								
+								<label for="firstName"><@spring.message "phonebookrecord.placeholder.firstName"/></label>
 								<@spring.bind "record.firstName"/>
 								<input type = "text" name = "${spring.status.expression}" 
 								value = "${spring.status.value!""}" class="form-control" 
@@ -24,6 +24,7 @@
 									<div class="alert alert-warning">${error}</div>
 								</#list>
 	
+								<label><@spring.message "phonebookrecord.placeholder.lastName"/></label>
 								<@spring.bind "record.lastName"/>
 								<input type = "text" name = "${spring.status.expression}" 
 								value = "${spring.status.value!""}" class="form-control" 
@@ -32,7 +33,8 @@
 								<#list spring.status.errorMessages as error>
 									<div class="alert alert-warning">${error}</div>
 								</#list>
-	
+								
+								<label><@spring.message "phonebookrecord.placeholder.patronymic"/></label>
 								<@spring.bind "record.patronymic"/>
 								<input type = "text" name = "${spring.status.expression}" 
 								value = "${spring.status.value!""}" class="form-control" 
@@ -42,6 +44,7 @@
 									<div class="alert alert-warning">${error}</div>
 								</#list>
 								
+								<label><@spring.message "phonebookrecord.placeholder.patronymic"/></label>
 								<@spring.bind "record.mobilePhone"/>
 								<input type = "text" name = "${spring.status.expression}" 
 								value = "${spring.status.value!""}" class="form-control" 
@@ -51,6 +54,7 @@
 									<div class="alert alert-warning">${error}</div>
 								</#list>
 								
+								<label><@spring.message "phonebookrecord.placeholder.homePhone"/></label>
 								<@spring.bind "record.homePhone"/>
 								<input type = "text" name = "${spring.status.expression}" 
 								value = "${spring.status.value!""}" class="form-control" 
@@ -59,7 +63,8 @@
 								<#list spring.status.errorMessages as error>
 									<div class="alert alert-warning">${error}</div>
 								</#list>
-
+								
+								<label><@spring.message "phonebookrecord.placeholder.street"/></label>
 								<@spring.bind "record.street"/>
 								<input type = "text" name = "${spring.status.expression}" 
 								value = "${spring.status.value!""}" class="form-control" 
@@ -69,6 +74,7 @@
 									<div class="alert alert-warning">${error}</div>
 								</#list>
 								
+								<label><@spring.message "phonebookrecord.placeholder.email"/></label>
 								<@spring.bind "record.email"/>
 								<input type = "text" name = "${spring.status.expression}" 
 								value = "${spring.status.value!""}" class="form-control" 

@@ -109,7 +109,6 @@
 	                </div>
 	                <div class="back">
 	                	<button class="back-button">
-							Back
 						</button>
 					</div>
 	            </div>
