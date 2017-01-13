@@ -9,6 +9,7 @@ h2:link{
 }
 #bootstrap-overrides .add-input{
 	width:200px; 
+	height:40px;
 }
 
 /*Top panel with logo and logout button*/
@@ -152,3 +153,36 @@ h2:link{
 	border-radius: 0px;
 	padding:15px 20px;
 }
+
+.login-table{
+	width:320px;
+}
+
+.login-table > tbody> tr > td{
+	padding-bottom:25px;
+}
+
+.login-table > tbody> tr.form-row{
+	position:relative;
+}
+.login-table > tbody> tr.form-row > td.errorlabel{
+	position:absolute;
+	width:300px;
+}
+
+@media screen and (min-width:768px) and (max-width:992px){
+	.login-table{
+		width:299px;
+	}
+}
+@media screen and (min-width:992px) and (max-width:1200px){
+	.login-table{
+		width:409px;
+	}
+}
+@media screen and (max-width:768px){
+	.login-table{
+		width:100%;
+	}
+}
+

@@ -1,0 +1,57 @@
+
+/*For login form*/
+.errorlabel .error{
+	background-color: #F78585;
+	margin-left:5px;
+	padding:5px 10px 5px 5px;
+	color:#B51C1C;
+	width:250px;
+	font-weight: normal;
+}
+
+.errorlabel .error::before {
+    content: " ";
+    position: absolute;
+    left: -4px;
+    top: 10%;
+    border-width: 5px;
+    border-style: solid;
+    border-color:  transparent #F78585 transparent transparent;
+}
+
+/*For add new record form*/
+.add-rec .form-group{
+	height:34px;
+	overflow: visible;
+	margin-bottom:18px;
+}
+.add-rec .form-group:first-child{
+	overflow: visible;
+	margin-bottom: 0px;
+}
+.add-rec .errorlabel{
+	background-color: #F78585;
+	margin-left:5px;
+	padding:0px 10px 0px 5px;
+	color:#B51C1C;
+	width:250px;
+	font-weight: bold;
+	position:relative;
+	left:200px;
+	bottom:40px;
+	z-index:11;
+}
+
+.add-rec .errorlabel::before {
+    content: " ";
+    position: absolute;
+    left: -10px;
+    top: 10%;
+    border-width: 5px;
+    border-style: solid;
+    border-color:  transparent #F78585 transparent transparent;
+}
+
+.add-rec .errorlabel .error{
+	margin:0px;
+}

@@ -8,8 +8,7 @@
 </head>
 <body>
 	<div class="container">
-		<div class="panel panel-default">
-			<#include "/fragments/top.ftl">
+		<div class="panel panel-primary">
 			<#include "/fragments/header.ftl">
 			<div class="panel-body">
 				<div class="alert alert-danger">

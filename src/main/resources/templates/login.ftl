@@ -34,35 +34,47 @@
 				
 				
 				<div class="row">
-					<div class="col-lg-4"></div>
-					<div class="col-lg-4">
-						<form action = "<@spring.url "/login_process"/>" method = "Post" role = "form">
-							<div class="form-group col-lg-12" >
+					<div class="col-lg-4 col-md-3 col-sm-3"></div>
+					<div class="col-lg-4 col-md-6 col-sm-6">
+						<form action = "<@spring.url "/login_process"/>" method = "Post" 
+							  role = "form" name="login-form">
+							<div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12" >
 								<h3 class="text-center"><@spring.message "form.login.name"/></h3>
-								<input type = "text" name = "login"
-								class="form-control" placeholder = "<@spring.message "form.login.placeholder.login"/>" />
-								<br/>
-								<input type = "password" name = "password" 
-								class="form-control" placeholder = "<@spring.message "form.login.placeholder.password"/>"/>
-								<br/>
-	
-								<button type = "submit" class="btn btn-info btn-block">
-									<@spring.message "form.login.button"/>
-								</button>
-								
-								<input type="hidden"
-									name="${_csrf.parameterName}"
-									value="${_csrf.token}"/>
-								</form>
+								<table class="login-table">
+									<tr class="form-row">
+										<td>
+											<input type = "text" name = "login"
+											class="form-control" id = "login"
+											placeholder = "<@spring.message "form.login.placeholder.login"/>" />
+										</td><td class="errorlabel"></td>
+									</tr>	
+									<tr class="form-row">
+										<td>
+											<input type = "password" id = "password" name = "password" 
+											class="form-control" placeholder = "<@spring.message "form.login.placeholder.password"/>"/>
+										</td><td class="errorlabel"></td>
+									</tr>
+									<tr>
+										<td>
+										<button type = "submit" class="btn btn-info btn-block">
+											<@spring.message "form.login.button"/>
+										</button>
+									
+										<input type="hidden"
+											name="${_csrf.parameterName}"
+											value="${_csrf.token}"/>
+										</td>
+									</tr>
+								</table>
 							</div>
 						</form>
 					</div>
-					<div class="col-lg-4"></div>
+					<div class="col-lg-4 col-md-3 col-sm-3"></div>
 				</div>
 					
 				<div class="row">
-					<div class="col-lg-4"></div>
-					<div class="col-lg-4">
+					<div class="col-lg-4 col-md-3 col-sm-3"></div>
+					<div class="col-lg-4 col-md-6 col-sm-6">
 						<form action = "<@spring.url "/registration"/>" method = "Post" role = "form">
 						<div class="form-group col-lg-12" >
 							<h3 class="text-center"><@spring.message "form.registration.name"/></h3>
@@ -107,7 +119,7 @@
 						</div>
 						</form>
 					</div>
-					<div class="col-lg-4"></div>
+					<div class="col-lg-4 col-md-3 col-sm-3"></div>
 				</div>
 		</div>
 	</div>

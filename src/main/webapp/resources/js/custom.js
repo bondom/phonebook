@@ -19,6 +19,7 @@ $(document).ready(function(){
     });
     
     $("body").click(function(evt){
+    	/*hide search panel if it was focused out*/
     	if($(evt.target).parents(".search-panel").length==0){
     		$(".search-form-wrapper").animate({
         		"width":"0px"
@@ -54,9 +55,10 @@ $(document).ready(function(){
     	console.log("New button is clicked");
     	$('.new-button').css("background-color","#337ab7");
 		$(".add-rec").animate({
-			width:"400px",
+			width:"480px",
 		},700,function(){
 			$(".add-rec .first-field").focus();
+			$(".add-rec").css("overflow","visible");
 		});
 		$(".add-rec").css({
 			"border":"1px solid #337ab7",
@@ -77,9 +79,9 @@ $(document).ready(function(){
      );
     $('.back-button').click(function(){
     	console.log("Back button is clicked");
-    	
+    	$(".add-rec").css("overflow","hidden");
 		$(".add-rec").animate({
-			width:"0px",
+			width:"0px"
 		},700,function(){
 			$('.new-button').css("background-color","white");
 			$(".add-rec").css({"border":"none"});

@@ -13,11 +13,12 @@
 			<div class="panel-body">
 				
 				
-				<div class="row">
+				<div class="row resultdiv">
 					<div class="col-md-2"></div>
-					<div class="col-md-8">
+					<div class="col-md-8 resultmsg">
 						<#if success??>
-							<div class="alert alert-success">
+							<div class="alert alert-success alert-dismissible">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 								${success}
 							</div>
 						</#if>
@@ -27,7 +28,8 @@
 				
 				<div class="row add-rec">
 				  	<div class="col-md-12">
-	                	<form action = "<@spring.url "/phonebook/addRecord"/>" method = "Post" role = "form">
+	                	<form action = "<@spring.url "/phonebook/addRecord"/>" method = "Post" 
+	                	      role = "form" name="newrecord-form" id="newrecord-form">
 							<div class="form-group">
 								<h4><@spring.message "form.addRecord.name"/>:</h4>
 							</div>
@@ -36,6 +38,7 @@
 								<input type = "text" name = "${spring.status.expression}" 
 								value = "${spring.status.value!""}" class="form-control add-input first-field" 
 								placeholder = "<@spring.message "phonebookrecord.placeholder.firstName"/>">
+								
 								<#list spring.status.errorMessages as error>
 									<div class="alert alert-warning">${error}</div>
 								</#list>
