@@ -86,6 +86,7 @@ h2:link{
 /*Searching of records*/
 .search-col{
 	padding-right:0px;
+	overflow: hidden;
 }
 .search-panel{
 	float:right;
